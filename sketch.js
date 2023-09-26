@@ -19,7 +19,7 @@
 // - luego ir aumentando de uno en uno hasta [6] (=> 117.649 circulos)
 // - aprox, a partir de [7] (=> 823.543 circulos) se puede demorar mucho
 
-let profMax = 8; // CUIDADO ! ! !
+let profMax = 6; // CUIDADO ! ! !
 
 // DENSIDAD. Cantidad de repeticiones de cada ciclo
 // - desde [1] solo central, hasta [7] laterales completas 
