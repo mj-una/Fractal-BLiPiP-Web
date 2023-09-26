@@ -64,7 +64,10 @@ function draw() {
   else sobreCirc = false;
 
   // Primer nivel
-  if (frameCount == 1) mouseClicked();
+  if (frameCount == 1) {
+    sobreCirc = true;
+    mouseClicked();
+  }
 
   // Dibujo ursor
   cursor(ARROW);
@@ -91,7 +94,7 @@ function mousePressed() {
 function mouseClicked() {
   
   // Validacion
-  if (negacion) {
+  if (negacion || !sobreCirc) {
     negacion = false;
     return;
   }
