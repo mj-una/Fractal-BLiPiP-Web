@@ -2,7 +2,7 @@
 
 demo: estructura recursiva y modular para fractal orientado a optimizacion de empaquetamiento.
 
-referencia: <a href="https://en.wikipedia.org/wiki/Circle_packing" target="_blank" rel="noopener noreferrer">https://en.wikipedia.org/wiki/Circle_packing</a>
+referencia: <a href="https://es.m.wikipedia.org/wiki/Problema_de_empaquetado" target="_blank" rel="noopener noreferrer">https://es.m.wikipedia.org/wiki/Problema_de_empaquetado</a>
 
 <br>
 
