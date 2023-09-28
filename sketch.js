@@ -1,11 +1,25 @@
-/*     ____.-2-._______.-5-_______..-O-.._______.-2-._______.-5-.____                       
+/*     ____.-2-._______.-5-_______..-O-.._______.-2-._______.-5-.____
 ###########################################################################
 ##                                                                       ##
-##                             martin julio                              ##
-##                          Fractal BLiPiP Web                           ##
-##                               prueba 3                                ##
 ##                                                                       ##
-## [final 26-9-23 ] ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ [ 75 chars ->] */
+##                             martin julio                              ##
+##                                                                       ##
+##                          Fractal BLiPiP Web                           ##
+##                                                                       ##
+##                                 demo                                  ##
+##                                                                       ##
+##                                                                       ##
+###########################################################################
+/* [final 28-9-23 ] ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ [ 75 chars ->] */
+
+
+                            /*   licencia   */
+                            /*    GPL3.0    */
+                              
+
+///////////////////
+// Repositorio: https://mj-una.github.io/Fractal-BLiPiP-Web/
+// Editor: https://editor.p5js.org/martin_julio/sketches/Xe8LTYz3J
 
 ///////////////////
 // Instrucciones:
@@ -15,9 +29,9 @@
 // Ajustes:
 
 // PROFUNDIDAD. Cantidad total de niveles
-// - recomendacion probar primero con [3] (=> 343 circulos)
-// - luego ir aumentando de uno en uno hasta [6] (=> 117.649 circulos)
-// - aprox, a partir de [7] (=> 823.543 circulos) se puede demorar mucho
+// - recomendacion probar primero con [3] (=> 57 circulos)
+// - luego ir aumentando de uno en uno hasta [6] (=> 19.608 circulos)
+// - aprox, a partir de [7] (=> 137.257 circulos) se puede tardar bastante
 
 let profMax = 6; // CUIDADO ! ! !
 
@@ -27,9 +41,8 @@ let profMax = 6; // CUIDADO ! ! !
 let densidad = 7;
 
 // RESOLUCION. Fraccionamiento interno de la imagen
-// - recomendado entre [400] y [2000]. medida relativa
+// - recomendacion entre [400] y [2000]. medida relativa
 // - si supera la res. de pantalla no se nota diferencia
-// - tamaño final (pixeles) depende del tamaño de la ventana
 
 let res = 1000;
 
@@ -40,6 +53,7 @@ let calculando = false;
 let negacion = false;
 let sobreCirc = false;
 let cantClick = 0;
+let contador = 0;
 
 //_________________________________________________________________________
 
@@ -49,6 +63,7 @@ function setup() {
   windowResized(); // Tamaño externo (responsive)
   background(0);
   angleMode(DEGREES);
+  textAlign(CENTER, CENTER);
   noStroke();
 }
 
@@ -63,54 +78,119 @@ function draw() {
   if (distMouse < res / 2) sobreCirc = true;
   else sobreCirc = false;
 
-  // Primer nivel
-  if (frameCount == 1) {
-    sobreCirc = true;
-    mouseClicked();
-  }
-
-  // Dibujo ursor
-  cursor(ARROW);
-  if (sobreCirc) {
-    cursor(HAND);
-    if (calculando) cursor(WAIT);
-  }
-
-// console.log("CALC="+calculando+" _NEGA="+negacion+" _CLIK="+cantClick);
-}
-
-//_________________________________________________________________________
-
-function mousePressed() {
+  // Borra temporizador por posicion
+  if (contador && !sobreCirc) clearTimeout(contador);
   
-  // Estados
-  if (calculando) negacion = true;
-  if (mouseButton != LEFT) negacion = true;
-  if (!negacion && sobreCirc) calculando = true;
+  // Primer nivel
+  if (frameCount == 1) primNiv();
+
+  // Dibujo cursor
+  cursor(ARROW);
+  if (sobreCirc) cursor(HAND);
+  if (calculando || (mouseIsPressed && sobreCirc)) cursor(WAIT);
+  
+  // Test
+  if (frameCount % 30 == 0) {
+    console.log("CALC="+calculando+" _NEGA="+negacion+
+    " _CLIK="+cantClick+ " _MOUS: "+ sobreCirc);
+  }
 }
 
 //_________________________________________________________________________
 
-function mouseClicked() {
+function primNiv() {
+    
+  sobreCirc = true;
+  mouseButton = LEFT;
+  touchEnded();
+  
+  fill(0);
+  textSize(res / 5);
+  textStyle(BOLD);
+  text("Fractal", 0, - res / 6 - res / 16);
+  text("BLiPiP", 0,  - res / 16);
+  text("Web", 0, res / 6 - res / 16);
+  
+  textSize(res / 18);
+  textStyle(ITALIC );
+  text("Presiona sobre el circulo", 0, res / 5 + res / 16);
+  text("para continuar", 0, res / 5 + res / 8);
+  
+  textSize(res / 28);
+  textStyle(NORMAL);
+  text("Profundidad", - res / 3 - res / 24, res / 5 - res / 8);
+  text(profMax, - res / 3 - res / 24, res / 5 - res / 12);
+  
+  text("Densidad", + res / 3 + res / 24,  res / 5 - res / 8);
+  text(densidad, res / 3 + res / 24, res / 5 - res / 12);
+  
+  // textSize(res / 20);
+  textStyle(NORMAL);
+  text("2 . 5 . O . 2 . 5", 0, - res / 3 - res / 16)
+}
+
+//_________________________________________________________________________
+
+function touchStarted() {
+  
+  // Entrada invalida
+  if (mouseButton != LEFT) negacion = true;
+  if (calculando || !sobreCirc) negacion = true;
+  
+  // Inicia emporizador para reiniciar
+  if (cantClick == profMax) contador = setTimeout(reiniciar, 1500);
+}
+
+//_________________________________________________________________________
+
+function reiniciar() {
+  
+  calculando = false;
+  cantClick = 0;
+  setup();
+  translate(res / 2, res / 2);
+  primNiv();
+  negacion = true;
+}
+
+//_________________________________________________________________________
+
+function touchEnded() {
+  
+  // Borra temporizador por tiempo
+  if (contador) clearTimeout(contador);
   
   // Validacion
-  if (negacion || !sobreCirc) {
+  if (!negacion && sobreCirc) calculando = true;
+  else {
     negacion = false;
-    return;
+    return false;
   }
-
+  
+  // Actualizacion
   if (cantClick < profMax) {
-    console.log("entra de " + cantClick + " a " + (cantClick + 1));
-    // Actualizacion
     cantClick++;
-    // LLAMADA INICIO                                              <=== f()
-    fractal(0, 0, 0, cantClick);
-    console.log("sale de " + (cantClick - 1) + " a " + cantClick);
+    
+    // LLAMADA FUNCION ORIGINAL
+    console.log("entra de "+(cantClick-1)+" a "+cantClick);
+    fractal(0, 0, 0, cantClick);                                // <=== f()
+    console.log("sale de "+(cantClick-1)+" a "+cantClick);
   }
 
   // Fin proceso
-  if (cantClick > 5) alert("Nivel " + cantClick + " de " + profMax);
+  if (cantClick == profMax) {
+    alert("\nManten presionado sobre el circulo para reiniciar." +
+          "\nRevisa el codigo para modificar profundidad y/o densidad." +
+          "\nhttps://editor.p5js.org/martin_julio/sketches/Xe8LTYz3J" +
+          "\n\n[  NIVEL " + cantClick+" DE "+profMax+"  ]"); 
+      
+  }
+  else if (cantClick > 5) {
+    alert("\n[  NIVEL " + cantClick + " DE " + profMax + "  ]");
+  }
+  
   calculando = false;
+  return false;
 }
 
 //_________________________________________________________________________
@@ -132,17 +212,18 @@ function fractal (pX, pY, nivel, total) {
   fill(col);
   circle(pX, pY, diam);
 
-  // Ciclo llamadas recursivas
+  // Ciclo rotacion
   for (let i = 0; i < densidad; i++) {
 
-    // LLAMADA CENTRAL                                             <=== r()
-    if (i == 0) fractal(pX, pY, nivel + 1, total);
+    // LLAMADA RECURSION CENTRAL
+    if (i == 0) fractal(pX, pY, nivel + 1, total);              // <=== r()
+    
+    // LLAMADAS RECURSIONES LATERALES
     else {
       let rot = i * 60;
       let npX = pX + cos(rot) * (diam / 3);
       let npY = pY + sin(rot) * (diam / 3);
-      // LLAMADAS LATERALES                                        <=== r()
-      fractal(npX, npY, nivel + 1, total);
+      fractal(npX, npY, nivel + 1, total);                      // <=== r()
     }
   }
 }
@@ -150,25 +231,23 @@ function fractal (pX, pY, nivel, total) {
 //_________________________________________________________________________
 
 function windowResized() {
-
-  document.getElementById("cont").style.backgroundColor = "rgb(1, 1, 1)";
-  document.getElementById("cont").style.margin = "0";
-  document.getElementById("cont").style.padding = "0";
-  document.getElementById("cont").style.display = "flex";
-  document.getElementById("cont").style.justifyContent = "center";
-  document.getElementById("cont").style.alignItems = "center";
-  document.getElementById("cont").style.overflow = "hidden";
   
+  const pg = document.getElementById("pg");
+  const cnv = document.getElementById("defaultCanvas0");
+  
+  pg.style.backgroundColor = "rgb(0,0,0)";
+  pg.style.display = "flex";
+  pg.style.justifyContent = "center";
+  pg.style.alignItems = "center";
+  pg.style.overflow = "hidden";
+  pg.style.width = "100vw";
+  pg.style.height = "100vh";
+  cnv.style.margin = "2vw";
   if (windowWidth > windowHeight ) {
-    document.getElementById("cont").style.height = "100vh";
-    document.getElementById("defaultCanvas0").style.height = "96vh";
-    document.getElementById("defaultCanvas0").style.width = "96vh";
-    document.getElementById("defaultCanvas0").style.margin = "2vh";
-  }
-  else {
-    document.getElementById("cont").style.width = "100vw";
-    document.getElementById("defaultCanvas0").style.height = "96vw";
-    document.getElementById("defaultCanvas0").style.width = "96vw";
-    document.getElementById("defaultCanvas0").style.margin = "2vw";
+    cnv.style.height = "96vh";
+    cnv.style.width = "96vh";
+  } else {
+    cnv.style.height = "96vw";
+    cnv.style.width = "96vw";
   }
 }
