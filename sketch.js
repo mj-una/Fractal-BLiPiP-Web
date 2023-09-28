@@ -18,12 +18,13 @@
                               
 
 ///////////////////
-// Repositorio: https://mj-una.github.io/Fractal-BLiPiP-Web/
-// Editor: https://editor.p5js.org/martin_julio/sketches/Xe8LTYz3J
+// Repositorio: https://github.com/mj-una/Fractal-BLiPiP-Web
+// Editor p5: https://editor.p5js.org/martin_julio/sketches/Xe8LTYz3J
 
 ///////////////////
 // Instrucciones:
 // Presionar sobre el circulo para avanzar de nivel.
+// En el nivel final mantener presionado para reiniciar.
 
 ///////////////////
 // Ajustes:
@@ -41,7 +42,7 @@ let profMax = 6; // CUIDADO ! ! !
 let densidad = 7;
 
 // RESOLUCION. Fraccionamiento interno de la imagen
-// - recomendacion entre [400] y [2000]. medida relativa
+// - recomendacion entre [500] y [2000]. medida relativa
 // - si supera la res. de pantalla no se nota diferencia
 
 let res = 1000;
