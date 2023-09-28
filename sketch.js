@@ -90,21 +90,19 @@ function touchEnded() {
           "\nhttps://editor.p5js.org/martin_julio/sketches/Xe8LTYz3J" +
           "\n\n[  NIVEL " + cantClick+" DE "+profMax+"  ]"); 
   }
-  else if (cantClick > 5) {
-    alert("\n[  NIVEL " + cantClick + " DE " + profMax + "  ]");
-  }
+  else if (cantClick > 5) alert("\n[  NIVEL " + cantClick + " DE " + profMax + "  ]");
   calculando = false;
   return false;
 }
 
-function fractal (pX, pY, nivel) { 
-  if (profMax <= nivel) return; // CUIDADO ! ! ! NO QUITAR NUNCA ! ! !
-  let diam = res / Math.pow(3, nivel);
-  fill((255 / profMax) * (nivel + 1));
+function fractal (pX, pY, nivel, total) { 
+  if (total <= nivel) return; // CUIDADO ! ! ! NO QUITAR NUNCA ! ! !
+  let diam = res / Math.pow(3, nivel);  
+  fill((255 / total) * (nivel + 1));
   circle(pX, pY, diam);
   for (let i = 0; i < densidad; i++) {
-    if (i == 0) fractal(pX, pY, nivel + 1);
-    else fractal(pX + cos(i * 60) * (diam / 3), pY + sin(i * 60) * (diam / 3), nivel + 1);
+    if (i == 0) fractal(pX, pY, nivel + 1, total);
+    else fractal(pX + cos(i * 60) * (diam / 3), pY + sin(i * 60) * (diam / 3), nivel + 1, total);
   }
 }
 
