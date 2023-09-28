@@ -97,20 +97,14 @@ function touchEnded() {
   return false;
 }
 
-function fractal (pX, pY, nivel, total) { 
-  if (total <= nivel) return; // CUIDADO ! ! ! NO QUITAR NUNCA ! ! !
-  let diam = res / Math.pow(3, nivel);  
-  let col = (255 / total) * (nivel + 1);
-  fill(col);
+function fractal (pX, pY, nivel) { 
+  if (profMax <= nivel) return; // CUIDADO ! ! ! NO QUITAR NUNCA ! ! !
+  let diam = res / Math.pow(3, nivel);
+  fill((255 / profMax) * (nivel + 1));
   circle(pX, pY, diam);
   for (let i = 0; i < densidad; i++) {
-    if (i == 0) fractal(pX, pY, nivel + 1, total);
-    else {
-      let rot = i * 60;
-      let npX = pX + cos(rot) * (diam / 3);
-      let npY = pY + sin(rot) * (diam / 3);
-      fractal(npX, npY, nivel + 1, total);
-    }
+    if (i == 0) fractal(pX, pY, nivel + 1);
+    else fractal(pX + cos(i * 60) * (diam / 3), pY + sin(i * 60) * (diam / 3), nivel + 1);
   }
 }
 
