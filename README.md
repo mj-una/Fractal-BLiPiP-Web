@@ -1,7 +1,9 @@
 ## Fractal BLiPiP Web
 
 demo: estructura recursiva y modular para construccion de fractal orientado a optimizacion de empaquetamiento.
+
 referencia: <a href="https://en.wikipedia.org/wiki/Circle_packing" target="_blank" rel="noopener noreferrer">https://en.wikipedia.org/wiki/Circle_packing</a>
+
 
 Martin Julio
 
