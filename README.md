@@ -1,6 +1,8 @@
 ## Fractal BLiPiP Web
 
-Por Martin Julio
+Demo: estructura recursiva y modular para construccion de fractal orientado a optimizacion de empaquetamiento.
+
+Martin Julio
 
 25-9-23
 
