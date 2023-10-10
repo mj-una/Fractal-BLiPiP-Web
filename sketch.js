@@ -10,7 +10,7 @@
 ##                                 demo                                  ##
 ##                                                                       ##
 ###########################################################################
-/* [final 28-9-23 ] ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ [ 75 chars ->] */
+/* [final 10-10-23 ] ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ [ 75 chars ->] */
 
 
                             /*   licencia   */
@@ -18,31 +18,31 @@
                               
 
 ///////////////////
-// Repositorio: https://github.com/mj-una/Fractal-BLiPiP-Web
-// Editor p5: https://editor.p5js.org/martin_julio/sketches/Xe8LTYz3J
+// Repositorio:
+// https://github.com/mj-una/Fractal-BLiPiP-Web
 
 ///////////////////
 // Instrucciones:
 // Presionar sobre el circulo para avanzar de nivel.
-// En el nivel final mantener presionado para reiniciar.
 
 ///////////////////
 // Ajustes:
 
-// PROFUNDIDAD. Cantidad total de niveles
-// - recomendacion probar primero con [3] (=> 57 circulos)
-// - luego ir aumentando de uno en uno hasta [6] (=> 19.608 circulos)
-// - aprox, a partir de [7] (=> 137.257 circulos) se puede tardar bastante
+// PROFUNDIDAD. Cantidad maxima de niveles
+// - recomendacion probar primero con: [3] (=> 57 circulos -> para dens = 7)
+// - luego ir aumentando de uno en uno hasta: [6] (=> 19.608 circulos)
+// - aprox, a partir de: [7] (=> 137.257 circulos) se puede tardar bastante
 
 let profMax = 6; // CUIDADO ! ! !
 
 // DENSIDAD. Cantidad de repeticiones de cada ciclo
-// - desde [1] solo central, hasta [7] laterales completas 
+// - desde: [1] (=> solo 1 central) en adelante (=> enteros positivos)
+// - ideal en 2d: [7] (=> 6 laterales optimizadas y no superpuestas) 
 
-let densidad = 7;
+let dens = 7;
 
 // RESOLUCION. Fraccionamiento interno de la imagen
-// - recomendacion entre [500] y [2000]. medida relativa
+// - recomendacion entre: [400] y: [2000]. medida relativa
 // - si supera la res. de pantalla no se nota diferencia
 
 let res = 1000;
@@ -91,10 +91,10 @@ function draw() {
   if (calculando || (mouseIsPressed && sobreCirc)) cursor(WAIT);
   
   // Test
-  if (frameCount % 30 == 0) {
-    console.log("CALC="+calculando+" _NEGA="+negacion+
-    " _CLIK="+cantClick+ " _MOUS: "+ sobreCirc);
-  }
+  // if (frameCount % 30 == 0) {
+  //   console.log("CALC="+calculando+" _NEGA="+negacion+
+  //   " _CLIK="+cantClick+ " _MOUS: "+ sobreCirc);
+  // }
 }
 
 //_________________________________________________________________________
@@ -123,7 +123,7 @@ function primNiv() {
   text(profMax, - res / 3 - res / 24, res / 5 - res / 12);
   
   text("Densidad", + res / 3 + res / 24,  res / 5 - res / 8);
-  text(densidad, res / 3 + res / 24, res / 5 - res / 12);
+  text(dens, res / 3 + res / 24, res / 5 - res / 12);
   
   // textSize(res / 20);
   textStyle(NORMAL);
@@ -173,7 +173,7 @@ function touchEnded() {
     cantClick++;
     
     // LLAMADA FUNCION ORIGINAL
-    console.log("entra de "+(cantClick-1)+" a "+cantClick);
+    // console.log("entra de "+(cantClick-1)+" a "+cantClick);
     fractal(0, 0, 0, cantClick);                                // <=== f()
     console.log("sale de "+(cantClick-1)+" a "+cantClick);
   }
@@ -184,7 +184,6 @@ function touchEnded() {
           "\nRevisa el codigo para modificar profundidad y/o densidad." +
           "\nhttps://editor.p5js.org/martin_julio/sketches/Xe8LTYz3J" +
           "\n\n[  NIVEL " + cantClick+" DE "+profMax+"  ]"); 
-      
   }
   else if (cantClick > 5) {
     alert("\n[  NIVEL " + cantClick + " DE " + profMax + "  ]");
@@ -214,14 +213,14 @@ function fractal (pX, pY, nivel, total) {
   circle(pX, pY, diam);
 
   // Ciclo rotacion
-  for (let i = 0; i < densidad; i++) {
+  for (let i = 0; i < dens; i++) {
 
     // LLAMADA RECURSION CENTRAL
     if (i == 0) fractal(pX, pY, nivel + 1, total);              // <=== r()
     
     // LLAMADAS RECURSIONES LATERALES
     else {
-      let rot = i * 60;
+      let rot = i * (360 / (dens - 1));
       let npX = pX + cos(rot) * (diam / 3);
       let npY = pY + sin(rot) * (diam / 3);
       fractal(npX, npY, nivel + 1, total);                      // <=== r()
