@@ -252,11 +252,10 @@ function fractal (pX, pY, nivel, total, densidad) {                      //
 
 function windowResized() {
   
-  // Guardar body y canvas
   const pg = document.getElementsByTagName("body")[0];
   const cnv = document.getElementById("defaultCanvas0");
   
-  // Estilo body
+  // Body
   pg.style.backgroundColor = "rgb(0,0,0)";
   pg.style.display = "flex";
   pg.style.justifyContent = "center";
@@ -265,7 +264,7 @@ function windowResized() {
   pg.style.width = "100vw";
   pg.style.height = "100vh";
   
-  // Estilo canvas
+  // Canvas
   if (windowWidth > windowHeight ) {
     cnv.style.height = "96vh";
     cnv.style.width = "96vh";
