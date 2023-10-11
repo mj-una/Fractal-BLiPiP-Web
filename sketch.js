@@ -2,10 +2,10 @@
 // Martin Julio
 // 25-9-23
 // licencia GPL3.0
-// https://editor.p5js.org/martin_julio/sketches/Xe8LTYz3J
+// https://github.com/mj-una/Fractal-BLiPiP-Web
 
 let profMax = 8; // CUIDADO ! ! !
-let densidad = 7;
+let dens = 7;
 let res = 1000;
 let calculando = false;
 let negacion = false;
@@ -53,7 +53,7 @@ function primNiv() {
   text("Profundidad", - res / 3 - res / 24, res / 5 - res / 8);
   text(profMax, - res / 3 - res / 24, res / 5 - res / 12);
   text("Densidad", + res / 3 + res / 24,  res / 5 - res / 8);
-  text(densidad, res / 3 + res / 24, res / 5 - res / 12);
+  text(dens, res / 3 + res / 24, res / 5 - res / 12);
   textStyle(NORMAL);
   text("2 . 5 . O . 2 . 5", 0, - res / 3 - res / 16)
 }
@@ -82,7 +82,7 @@ function touchEnded() {
   }
   if (cantClick < profMax) {
     cantClick++;
-    fractal(0, 0, 0, cantClick);
+    fractal(0, 0, 0, cantClick, dens);
   }
   if (cantClick == profMax) {
     alert("\nManten presionado sobre el circulo para reiniciar." +
@@ -95,14 +95,14 @@ function touchEnded() {
   return false;
 }
 
-function fractal (pX, pY, nivel, total) { 
+function fractal (pX, pY, nivel, total, densidad) { 
   if (total <= nivel) return; // CUIDADO ! ! ! NO QUITAR NUNCA ! ! !
   let diam = res / Math.pow(3, nivel);  
   fill((255 / total) * (nivel + 1));
   circle(pX, pY, diam);
   for (let i = 0; i < densidad; i++) {
-    if (i == 0) fractal(pX, pY, nivel + 1, total);
-    else fractal(pX + cos(i * 60) * (diam / 3), pY + sin(i * 60) * (diam / 3), nivel + 1, total);
+    if (i == 0) fractal(pX, pY, nivel + 1, total, densidad);
+    else fractal(pX + cos(i * 60) * (diam / 3), pY + sin(i * 60) * (diam / 3), nivel + 1, total, densidad);
   }
 }
 
@@ -116,7 +116,6 @@ function windowResized() {
   pg.style.overflow = "hidden";
   pg.style.width = "100vw";
   pg.style.height = "100vh";
-  cnv.style.margin = "2vw";
   if (windowWidth > windowHeight ) {
     cnv.style.height = "96vh";
     cnv.style.width = "96vh";
