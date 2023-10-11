@@ -10,7 +10,7 @@
 ##                                 demo                                  ##
 ##                                                                       ##
 ###########################################################################
-/* [final 10-10-23 ] ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ [ 75 chars ->] */
+/* [final 11-10-23 ] ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ [ 75 chars. ancho ->] */
 
 
                             /*   licencia   */
@@ -100,11 +100,13 @@ function draw() {
 //_________________________________________________________________________
 
 function primNiv() {
-    
+  
+  // Primera llamada
   sobreCirc = true;
   mouseButton = LEFT;
   touchEnded();
   
+  // Texto centro
   fill(0);
   textSize(res / 5);
   textStyle(BOLD);
@@ -112,20 +114,23 @@ function primNiv() {
   text("BLiPiP", 0,  - res / 16);
   text("Web", 0, res / 6 - res / 16);
   
+  // Texto abajo
   textSize(res / 18);
   textStyle(ITALIC );
   text("Presiona sobre el circulo", 0, res / 5 + res / 16);
   text("para continuar", 0, res / 5 + res / 8);
   
+  // Texto izquierda
   textSize(res / 28);
   textStyle(NORMAL);
   text("Profundidad", - res / 3 - res / 24, res / 5 - res / 8);
   text(profMax, - res / 3 - res / 24, res / 5 - res / 12);
   
+  // Texto derecha
   text("Densidad", + res / 3 + res / 24,  res / 5 - res / 8);
   text(dens, res / 3 + res / 24, res / 5 - res / 12);
   
-  // textSize(res / 20);
+  // Texto arriba
   textStyle(NORMAL);
   text("2 . 5 . O . 2 . 5", 0, - res / 3 - res / 16)
 }
@@ -146,11 +151,16 @@ function touchStarted() {
 
 function reiniciar() {
   
+  // Ejecutar setup
   calculando = false;
   cantClick = 0;
   setup();
+  
+  // Primer nivel
   translate(res / 2, res / 2);
   primNiv();
+  
+  // Evita proximo touchEnded()
   negacion = true;
 }
 
@@ -174,11 +184,11 @@ function touchEnded() {
     
     // LLAMADA FUNCION ORIGINAL
     // console.log("entra de "+(cantClick-1)+" a "+cantClick);
-    fractal(0, 0, 0, cantClick);                                // <=== f()
+    fractal(0, 0, 0, cantClick, dens);                           //  <=fn()
     console.log("sale de "+(cantClick-1)+" a "+cantClick);
   }
 
-  // Fin proceso
+  // Notificacion fin proceso lento
   if (cantClick == profMax) {
     alert("\nManten presionado sobre el circulo para reiniciar." +
           "\nRevisa el codigo para modificar profundidad y/o densidad." +
@@ -189,52 +199,64 @@ function touchEnded() {
     alert("\n[  NIVEL " + cantClick + " DE " + profMax + "  ]");
   }
   
+  // Fin proceso
   calculando = false;
   return false;
 }
 
 //_________________________________________________________________________
-
-/* Argumentos
-  => pX: coordenada central en x
-  => pY: coordenada central en y
-  => nivel: nivel de profundidad en fractal
-  => total: cantidad total de niveles del fractal
-  =============>  ##  ##   ##     ##    */
-function fractal (pX, pY, nivel, total) { 
-
-  // Caso Base
-  if (total <= nivel) return; // CUIDADO ! ! ! NO QUITAR NUNCA ! ! !
-
-  // Dibujo
-  let diam = res / Math.pow(3, nivel);  
-  let col = (255 / total) * (nivel + 1);
-  fill(col);
-  circle(pX, pY, diam);
-
-  // Ciclo rotacion
-  for (let i = 0; i < dens; i++) {
-
-    // LLAMADA RECURSION CENTRAL
-    if (i == 0) fractal(pX, pY, nivel + 1, total);              // <=== r()
-    
-    // LLAMADAS RECURSIONES LATERALES
-    else {
-      let rot = i * (360 / (dens - 1));
-      let npX = pX + cos(rot) * (diam / 3);
-      let npY = pY + sin(rot) * (diam / 3);
-      fractal(npX, npY, nivel + 1, total);                      // <=== r()
-    }
-  }
-}
+///////////////////////////////////////////////////////////////////////////
+                                                                         //
+                                                                         //
+/* Argumentos                                                            //
+  => pX: coordenada central en x                                         //
+  => pY: coordenada central en y                                         //
+  => nivel: nivel de profundidad en fractal                              //
+  => total: cantidad total de niveles del fractal                        //
+  => densidad: cantidad de nuevas recursiones por cada llamda            //
+  =============>  ##  ##   ##     ##     ##       */                     //
+function fractal (pX, pY, nivel, total, densidad) {                      //
+                                                                         //
+  // Caso Base                                                           //
+  if (total <= nivel) return; // CUIDADO ! ! ! NO QUITAR NUNCA ! ! !     //
+                                                                         //
+  // Dibujo                                                              //
+  let diam = res / Math.pow(3, nivel);                                   //
+  let col = (255 / total) * (nivel + 1);                                 //
+  fill(col);                                                             //
+  circle(pX, pY, diam);                                                  //
+                                                                         //
+  // Ciclo rotacion                                                      //
+  for (let i = 0; i < densidad; i++) {                                   //
+                                                                         //
+    // LLAMADA RECURSION CENTRAL                                         //
+    if (i == 0) fractal(pX, pY, nivel + 1, total, densidad); //  <=rcr() //
+                                                                         //
+    // LLAMADAS RECURSIONES LATERALES                                    //
+    else {                                                               //
+      let rot = i * (360 / (densidad - 1));                              //
+      let npX = pX + cos(rot) * (diam / 3);                              //
+      let npY = pY + sin(rot) * (diam / 3);                              //
+      fractal(npX, npY, nivel + 1, total, densidad);         //  <=rcr() //
+    }                                                                    //
+                                                                         //
+    // Test                                                              //
+    // console.log("__n=" + nivel + " __px=" + pX + " __py=" + pY);      //
+  }                                                                      //
+}                                                                        //
+                                                                         //
+                                                                         //
+///////////////////////////////////////////////////////////////////////////
 
 //_________________________________________________________________________
 
 function windowResized() {
   
+  // Guardar body y canvas
   const pg = document.getElementsByTagName("body")[0];
   const cnv = document.getElementById("defaultCanvas0");
   
+  // Estilo body
   pg.style.backgroundColor = "rgb(0,0,0)";
   pg.style.display = "flex";
   pg.style.justifyContent = "center";
@@ -242,11 +264,13 @@ function windowResized() {
   pg.style.overflow = "hidden";
   pg.style.width = "100vw";
   pg.style.height = "100vh";
-  cnv.style.margin = "2vw";
+  
+  // Estilo canvas
   if (windowWidth > windowHeight ) {
     cnv.style.height = "96vh";
     cnv.style.width = "96vh";
-  } else {
+  }
+  else {
     cnv.style.height = "96vw";
     cnv.style.width = "96vw";
   }
