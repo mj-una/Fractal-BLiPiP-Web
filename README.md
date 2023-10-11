@@ -1,6 +1,8 @@
 ## Fractal BLiPiP Web
 
-Por Martin Julio
+Version sin comentarios
+
+Martin Julio
 
 25-9-23
 
