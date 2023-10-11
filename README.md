@@ -1,12 +1,19 @@
 ## Fractal BLiPiP Web
 
-Version sin comentarios
+version codigo sin comentarios
+
+<br>
 
 Martin Julio
 
-25-9-23
+2023
 
+<br>
 
-Para ver en <a href="https://editor.p5js.org/martin_julio/sketches/Xe8LTYz3J" target="_blank" rel="noopener">editor-p5js</a>
+* abrir en <a href="https://editor.p5js.org/martin_julio/sketches/Xe8LTYz3J" target="_blank" rel="noopener noreferrer">editor-p5js</a>
 
-Para ver en <a href="https://mj-una.github.io/Fractal-BLiPiP-Web/" target="_blank" rel="noopener">github-pages</a>
+* abrir en <a href="https://mj-una.github.io/Fractal-BLiPiP-Web/" target="_blank" rel="noopener noreferrer">github-pages</a>
+
+<br>
+
+***
