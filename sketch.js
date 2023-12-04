@@ -4,7 +4,7 @@
 // licencia GPL3.0
 // https://github.com/mj-una/Fractal-BLiPiP-Web
 
-let profMax = 8; // CUIDADO ! ! !
+let profMax = 6; // CUIDADO ! ! !
 let dens = 7;
 let res = 1000;
 let calculando = false;
