@@ -1,8 +1,8 @@
 ## Fractal BLiPiP Web
 
-demo: estructura recursiva y modular para fractal orientado a optimizacion de empaquetamiento.
+demo: estructura recursiva y modular de fractal orientado a optimizacion de empaquetamiento.
 
-aplicación: idea de formato para relatos colectivos que se distribuyen en redes descentralizadas
+aplicación: idea de formato para relatos colectivos que se construyen como redes distribuídas.
 
 referencia: <a href="https://es.m.wikipedia.org/wiki/Problema_de_empaquetado" target="_blank" rel="noopener noreferrer">https://es.m.wikipedia.org/wiki/Problema_de_empaquetado</a>
 
